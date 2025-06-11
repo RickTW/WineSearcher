@@ -10,28 +10,35 @@
   <button onclick="cerca()">Cerca</button>
   <div id="risultato"></div>
   <script>
-    function cerca() {
-      var q = document.getElementById('query').value;
-      fetch('https://script.google.com/macros/s/AKfycbyULB1rn-3bd0N4etNAcLVeCqJwYXY455QWeraArSWTxsVyQKL66x-JvWHNnjQk-eAi/exec?q=' + encodeURIComponent(q))
-        .then(r => r.json())
-        .then(arr => {
-          if (typeof arr === "string" || arr.length === 0) {
-            document.getElementById('risultato').innerText = arr;
-            return;
-          }
-          // Intestazioni delle colonne (puoi personalizzare i nomi)
-          let html = "<table border='1'><tr>" +
-            "<th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>L</th><th>S</th><th>U</th><th>X</th></tr>";
-          arr.forEach(row => {
-            html += "<tr>" + row.map(cell => `<td>${cell}</td>`).join('') + "</tr>";
-          });
-          html += "</table>";
-          document.getElementById('risultato').innerHTML = html;
-        })
-        .catch(err => {
-          document.getElementById('risultato').innerText = "Errore nella richiesta: " + err;
-        });
-    }
+function cerca() {
+  var q = document.getElementById('query').value;
+  fetch('https://script.google.com/macros/s/TUO_DEPLOYMENT_ID/exec?q=' + encodeURIComponent(q))
+    .then(r => r.text()) // Prendi sempre come testo
+    .then(t => {
+      let arr;
+      try {
+        arr = JSON.parse(t);
+      } catch {
+        // Non è JSON, quindi è un messaggio di errore o "Not found"
+        document.getElementById('risultato').innerText = t;
+        return;
+      }
+      if (!Array.isArray(arr) || arr.length === 0) {
+        document.getElementById('risultato').innerText = "Nessun risultato";
+        return;
+      }
+      let html = "<table border='1'><tr>" +
+        "<th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>L</th><th>S</th><th>U</th><th>X</th></tr>";
+      arr.forEach(row => {
+        html += "<tr>" + row.map(cell => `<td>${cell}</td>`).join('') + "</tr>";
+      });
+      html += "</table>";
+      document.getElementById('risultato').innerHTML = html;
+    })
+    .catch(err => {
+      document.getElementById('risultato').innerText = "Errore nella richiesta: " + err;
+    });
+}
   </script>
 </body>
 </html>
