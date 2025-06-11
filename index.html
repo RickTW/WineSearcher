@@ -12,7 +12,7 @@
   <script>
 function cerca() {
   var q = document.getElementById('query').value;
-  fetch('https://script.google.com/macros/s/TUO_DEPLOYMENT_ID/exec?q=' + encodeURIComponent(q))
+  fetch('https://script.google.com/macros/s/AKfycbyULB1rn-3bd0N4etNAcLVeCqJwYXY455QWeraArSWTxsVyQKL66x-JvWHNnjQk-eAi/exec?q=' + encodeURIComponent(q))
     .then(r => r.text()) // Prendi sempre come testo
     .then(t => {
       let arr;
