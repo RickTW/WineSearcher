@@ -33,11 +33,17 @@
     .centered {
       text-align: center;
     }
+    .vino-input {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 
 <body>
-  <input type="text" id="query" placeholder="Inserisci stringa">
+  <label for="vinoInput">Vino: </label>
+  <input type="text" id="vinoInput" name="vino" class="vino-input" placeholder="Nome Vino">
   <button onclick="cerca()">Cerca</button>
   <div id="risultato"></div>
   <script>
