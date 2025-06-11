@@ -9,31 +9,29 @@
     .selected-row {
       background-color: rgb(171, 245, 231) !important;
     }
-
     /* Colori normali delle ultime 3 colonne */
     .col-last-3 {
       background-color: rgb(250, 247, 99);
     }
-
     .col-last-2 {
       background-color: rgb(250, 179, 87);
     }
-
     .col-last-1 {
       background-color: rgb(123, 192, 91);
     }
-
     /* Colori delle ultime 3 colonne quando la riga è selezionata */
     .selected-row .col-last-3 {
       background-color: rgb(255, 244, 171) !important;
     }
-
     .selected-row .col-last-2 {
       background-color: rgb(255, 209, 155) !important;
     }
-
     .selected-row .col-last-1 {
       background-color: rgb(191, 255, 161) !important;
+    }
+    /* Testo Centrato */
+    .centered {
+      text-align: center;
     }
   </style>
 </head>
@@ -60,24 +58,31 @@
             document.getElementById('risultato').innerText = "Nessun risultato";
             return;
           }
+          
           let html = "<table border='1'><tr>" +
-            "<th>NAZIONE</th><th>REGIONE</th><th>PRODUTTORE</th><th>VINO</th><th>ANNATA</th><th>FORMATO</th><th>PREZZO SERVIZIO</th><th>PREZZO ASPORTO</th><th>PREZZO CALICE</th></tr>";
-
-          //const colors = [null, null, null, null, null, null, "rgb(235,228,106)", "rgb(227,153,64)", "rgb(94,189,171)"];
+            "<th class='centered'>NAZIONE</th>" +
+            "<th class='centered'>REGIONE</th>" +
+            "<th class='centered'>PRODUTTORE</th>" +
+            "<th class='centered'>VINO</th>" +
+            "<th class='centered'>ANNATA</th>" +
+            "<th class='centered'>FORMATO</th>" +
+            "<th class='centered'>PREZZO SERVIZIO</th>" +
+            "<th class='centered'>PREZZO ASPORTO</th>" +
+            "<th class='centered'>PREZZO CALICE</th></tr>";
 
           arr.forEach((row, rowIdx) => {
             html += `<tr onclick="selezionaRiga(this)">`;
             row.forEach((cell, idx) => {
-              // Ultime 3 colonne: idx 6, 7, 8 (array di 9 colonne)
-              if (idx === row.length - 3) {
-                html += `<td class="col-last-3">${cell}</td>`;
-              } else if (idx === row.length - 2) {
-                html += `<td class="col-last-2">${cell}</td>`;
-              } else if (idx === row.length - 1) {
-                html += `<td class="col-last-1">${cell}</td>`;
-              } else {
-                html += `<td>${cell}</td>`;
-              }
+              // Ultime 3 colonne: idx 6, 7, 8 (per colorazione)
+              let tdClass = "";
+              if (idx === row.length - 3) tdClass = "col-last-3";
+              else if (idx === row.length - 2) tdClass = "col-last-2";
+              else if (idx === row.length - 1) tdClass = "col-last-1";
+
+              // Colonne da centrare: 4,5,6,7,8
+              if (idx >= 4) tdClass += (tdClass ? " " : "") + "centered";
+
+              html += `<td${tdClass ? ` class="${tdClass}"` : ""}>${cell}</td>`;
             });
             html += "</tr>";
           });
