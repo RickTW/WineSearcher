@@ -11,7 +11,7 @@
   <script>
     function cerca() {
       var q = document.getElementById('query').value;
-      fetch('https://script.google.com/macros/s/AKfycbyUJKnXvg5yytDE6UPEpFXvBSi0qvlf3fW6ZQqe5UI/dev?q=' + encodeURIComponent(q))
+      fetch('https://script.google.com/macros/s/AKfycbyULB1rn-3bd0N4etNAcLVeCqJwYXY455QWeraArSWTxsVyQKL66x-JvWHNnjQk-eAi/exec?q=' + encodeURIComponent(q))
         .then(r => r.text())
         .then(t => document.getElementById('risultato').innerText = t);
     }
