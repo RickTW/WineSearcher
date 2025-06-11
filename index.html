@@ -9,6 +9,32 @@
     .selected-row {
       background-color: rgb(171, 245, 231) !important;
     }
+
+    /* Colori normali delle ultime 3 colonne */
+    .col-last-3 {
+      background-color: rgb(250, 247, 99);
+    }
+
+    .col-last-2 {
+      background-color: rgb(250, 179, 87);
+    }
+
+    .col-last-1 {
+      background-color: rgb(123, 192, 91);
+    }
+
+    /* Colori delle ultime 3 colonne quando la riga è selezionata */
+    .selected-row .col-last-3 {
+      background-color: rgb(255, 244, 171) !important;
+    }
+
+    .selected-row .col-last-2 {
+      background-color: rgb(255, 209, 155) !important;
+    }
+
+    .selected-row .col-last-1 {
+      background-color: rgb(191, 255, 161) !important;
+    }
   </style>
 </head>
 
@@ -42,8 +68,13 @@
           arr.forEach((row, rowIdx) => {
             html += `<tr onclick="selezionaRiga(this)">`;
             row.forEach((cell, idx) => {
-              if (colors[idx]) {
-                html += `<td style="background-color: ${colors[idx]};">${cell}</td>`;
+              // Ultime 3 colonne: idx 6, 7, 8 (array di 9 colonne)
+              if (idx === row.length - 3) {
+                html += `<td class="col-last-3">${cell}</td>`;
+              } else if (idx === row.length - 2) {
+                html += `<td class="col-last-2">${cell}</td>`;
+              } else if (idx === row.length - 1) {
+                html += `<td class="col-last-1">${cell}</td>`;
               } else {
                 html += `<td>${cell}</td>`;
               }
