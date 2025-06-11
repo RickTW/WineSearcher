@@ -33,28 +33,19 @@
     .centered {
       text-align: center;
     }
-    .input-row {
-      display: flex;
-      align-items: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      /* spazio sopra e sotto */
-    }
-    .input-row label {
-      margin-right: 8px;
-    }
-    .input-row input[type="text"] {
-      margin-right: 8px;
+    /* Margini */
+    .vino-input {
+      display: block;
+      margin-top: 100px;
+      margin-bottom: 100px;
     }
   </style>
 </head>
 
 <body>
-  
-    <label for="vinoInput">Vino: </label>
-    <input type="text" id="vinoInput" name="vino">
-    <button onclick="cerca()">Cerca</button>
-
+  <label for="vinoInput">Vino: </label>
+  <input type="text" id="vinoInput" name="vino" placeholder="Nome Vino">
+  <button onclick="cerca()">Cerca</button>
   <div id="risultato"></div>
   <script>
     function cerca() {
@@ -74,7 +65,7 @@
             document.getElementById('risultato').innerText = "Nessun risultato";
             return;
           }
-
+          
           let html = "<table border='1'><tr>" +
             "<th class='centered'>NAZIONE</th>" +
             "<th class='centered'>REGIONE</th>" +
