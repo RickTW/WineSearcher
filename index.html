@@ -36,8 +36,8 @@
     .input-row {
       display: flex;
       align-items: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 15px;
+      margin-bottom: 15px;
       /* spazio sopra e sotto */
     }
     .input-row label {
@@ -51,22 +51,58 @@
 
 <body>
   <div class="input-row">
+    <label for="nazioneInput">Nazione: </label>
+    <input type="text" id="nazioneInput" name="nazione">
+  </div>
+  <div class="input-row">
+    <label for="regioneInput">Regione: </label>
+    <input type="text" id="regioneInput" name="regione">
+  </div>
+  <div class="input-row">
+    <label for="cantinaInput">Cantina: </label>
+    <input type="text" id="cantinaInput" name="cantina">
+  </div>
+  <div class="input-row">
     <label for="vinoInput">Vino: </label>
     <input type="text" id="vinoInput" name="vino">
+  </div>
+  <div class="input-row">
+    <label for="tipologiaInput">Tipologia: </label>
+    <input type="text" id="tipologiaInput" name="tipologia">
+  </div>
+  <div class="input-row">
+    <label for="bollaInput">Bolla: </label>
+    <input type="text" id="bollaInput" name="bolla">
+  </div>
+  <div class="input-row">
     <button onclick="cerca()">Cerca</button>
   </div>
   <div id="risultato"></div>
   <script>
     function cerca() {
-      var q = document.getElementById('vinoInput').value;
-      fetch('https://script.google.com/macros/s/AKfycbydKttalQlGo0snireuMMZNct-1mdCdAEC1phh3UADuCf6Uv1Npu4LrcwdwodvuzSvM/exec?q=' + encodeURIComponent(q))
-        .then(r => r.text()) // Prendi sempre come testo
+      // Prendi i valori dei parametri
+      var params = {
+        nazione: document.getElementById('nazioneInput').value,
+        regione: document.getElementById('regioneInput').value,
+        cantina: document.getElementById('cantinaInput').value,
+        vino: document.getElementById('vinoInput').value,
+        tipologia: document.getElementById('tipologiaInput').value,
+        bolla: document.getElementById('bollaInput').value
+      };
+
+      // Costruisci la query string
+      var query = Object.keys(params)
+        .filter(k => params[k]) // solo parametri valorizzati
+        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+        .join('&');
+
+      fetch('https://script.google.com/macros/s/AKfycbydKttalQlGo0snireuMMZNct-1mdCdAEC1phh3UADuCf6Uv1Npu4LrcwdwodvuzSvM/exec?' + query)
+        .then(r => r.text())
         .then(t => {
           let arr;
           try {
             arr = JSON.parse(t);
           } catch {
-            // Non è JSON, quindi è un messaggio di errore o "Not found"
             document.getElementById('risultato').innerText = t;
             return;
           }
@@ -91,15 +127,11 @@
           arr.forEach((row, rowIdx) => {
             html += `<tr onclick="selezionaRiga(this)">`;
             row.forEach((cell, idx) => {
-              // Ultime 3 colonne: idx 6, 7, 8 (per colorazione)
               let tdClass = "";
               if (idx === row.length - 3) tdClass = "col-last-3";
               else if (idx === row.length - 2) tdClass = "col-last-2";
               else if (idx === row.length - 1) tdClass = "col-last-1";
-
-              // Colonne da centrare: 4,5,6,7,8
               if (idx >= 4) tdClass += (tdClass ? " " : "") + "centered";
-
               html += `<td${tdClass ? ` class="${tdClass}"` : ""}>${cell}</td>`;
             });
             html += "</tr>";
@@ -112,7 +144,6 @@
         });
     }
 
-    // Funzione globale per selezionare la riga
     window.selezionaRiga = function (tr) {
       document.querySelectorAll("#risultato tr").forEach(r => r.classList.remove("selected-row"));
       tr.classList.add("selected-row");
