@@ -58,7 +58,7 @@
   <div id="risultato"></div>
   <script>
     function cerca() {
-      var q = document.getElementById('query').value;
+      var q = document.getElementById('vinoInput').value;
       fetch('https://script.google.com/macros/s/AKfycbyNmo2quON4lUSkVhlm4jdBpuptHCdH0sR5Ifkkrt_VddeoaWySmEwXLYMaMhNxHeGL/exec?q=' + encodeURIComponent(q))
         .then(r => r.text()) // Prendi sempre come testo
         .then(t => {
