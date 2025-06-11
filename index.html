@@ -1,55 +1,69 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ricerca Google Sheet</title>
+  <style>
+    .selected-row {
+      background-color: rgb(255, 255, 180) !important;
+    }
+  </style>
 </head>
+
 <body>
   <input type="text" id="query" placeholder="Inserisci stringa">
   <button onclick="cerca()">Cerca</button>
   <div id="risultato"></div>
   <script>
-function cerca() {
-  var q = document.getElementById('query').value;
-  fetch('https://script.google.com/macros/s/AKfycbyNmo2quON4lUSkVhlm4jdBpuptHCdH0sR5Ifkkrt_VddeoaWySmEwXLYMaMhNxHeGL/exec?q=' + encodeURIComponent(q))
-    .then(r => r.text()) // Prendi sempre come testo
-    .then(t => {
-      let arr;
-      try {
-        arr = JSON.parse(t);
-      } catch {
-        // Non è JSON, quindi è un messaggio di errore o "Not found"
-        document.getElementById('risultato').innerText = t;
-        return;
-      }
-      if (!Array.isArray(arr) || arr.length === 0) {
-        document.getElementById('risultato').innerText = "Nessun risultato";
-        return;
-      }
-      let html = "<table border='1'><tr>" +
-        "<th>NAZIONE</th><th>REGIONE</th><th>PRODUTTORE</th><th>VINO</th><th>ANNATA</th><th>FORMATO</th><th>PREZZO SERVIZIO</th><th>PREZZO ASPORTO</th><th>PREZZO CALICE</th></tr>";
-
-      const colors = [null, null, null, null, null, null, "rgb(235,228,106)", "rgb(227,153,64)", "rgb(94,189,171)"];
-
-      arr.forEach(row => {
-        html += "<tr>";
-        row.forEach((cell, idx) => {
-          if (colors[idx]) {
-            html += `<td style="background-color: ${colors[idx]};">${cell}</td>`;
-          } else {
-            html += `<td>${cell}</td>`;
+    function cerca() {
+      var q = document.getElementById('query').value;
+      fetch('https://script.google.com/macros/s/AKfycbyNmo2quON4lUSkVhlm4jdBpuptHCdH0sR5Ifkkrt_VddeoaWySmEwXLYMaMhNxHeGL/exec?q=' + encodeURIComponent(q))
+        .then(r => r.text()) // Prendi sempre come testo
+        .then(t => {
+          let arr;
+          try {
+            arr = JSON.parse(t);
+          } catch {
+            // Non è JSON, quindi è un messaggio di errore o "Not found"
+            document.getElementById('risultato').innerText = t;
+            return;
           }
+          if (!Array.isArray(arr) || arr.length === 0) {
+            document.getElementById('risultato').innerText = "Nessun risultato";
+            return;
+          }
+          let html = "<table border='1'><tr>" +
+            "<th>NAZIONE</th><th>REGIONE</th><th>PRODUTTORE</th><th>VINO</th><th>ANNATA</th><th>FORMATO</th><th>PREZZO SERVIZIO</th><th>PREZZO ASPORTO</th><th>PREZZO CALICE</th></tr>";
+
+          const colors = [null, null, null, null, null, null, "rgb(235,228,106)", "rgb(227,153,64)", "rgb(94,189,171)"];
+
+          arr.forEach((row, rowIdx) => {
+            html += `<tr onclick="selezionaRiga(this)">`;
+            row.forEach((cell, idx) => {
+              if (colors[idx]) {
+                html += `<td style="background-color: ${colors[idx]};">${cell}</td>`;
+              } else {
+                html += `<td>${cell}</td>`;
+              }
+            });
+            html += "</tr>";
+          });
+          html += "</table>";
+          document.getElementById('risultato').innerHTML = html;
+        })
+        .catch(err => {
+          document.getElementById('risultato').innerText = "Errore nella richiesta: " + err;
         });
-        html += "</tr>";
-      });
-      html += "</table>";
-      document.getElementById('risultato').innerHTML = html;
-    })
-    .catch(err => {
-      document.getElementById('risultato').innerText = "Errore nella richiesta: " + err;
-    });
-}
+    }
+
+    // Funzione globale per selezionare la riga
+    window.selezionaRiga = function (tr) {
+      document.querySelectorAll("#risultato tr").forEach(r => r.classList.remove("selected-row"));
+      tr.classList.add("selected-row");
+    }
   </script>
 </body>
+
 </html>
