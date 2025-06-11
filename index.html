@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Ricerca Google Sheet</title>
+</head>
+<body>
+  <input type="text" id="query" placeholder="Inserisci stringa">
+  <button onclick="cerca()">Cerca</button>
+  <div id="risultato"></div>
+  <script>
+    function cerca() {
+      var q = document.getElementById('query').value;
+      fetch('https://script.google.com/macros/s/TUO_DEPLOYMENT_ID/exec?q=' + encodeURIComponent(q))
+        .then(r => r.text())
+        .then(t => document.getElementById('risultato').innerText = t);
+    }
+  </script>
+</body>
+</html>
