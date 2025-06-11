@@ -96,7 +96,7 @@
         .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
         .join('&');
 
-      fetch('https://script.google.com/macros/s/AKfycbx1X6bQufuwNMl3SDVrtNCLZ4VuEe7GuILKZMgLEe-OGxFqiAQOJOtnV8HvqtGJmtaM/exec?' + query)
+      fetch('https://script.google.com/macros/s/AKfycbzR8aQqDJo_Lx0C-y3vICOBoKsQgKiooO1TnHgEfodwTN6YpJQYnuLW4oAkGQ1Sonw/exec?' + query)
         .then(r => r.text())
         .then(t => {
           let arr;
