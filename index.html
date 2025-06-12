@@ -42,8 +42,8 @@
     }
     .input-row label {
       display: inline-block;
-      width: 80;
-      text-align: left;
+      width: 60px;
+      text-align: right;
       margin-right: 8px;
     }
     .input-row input[type="text"] {
@@ -52,37 +52,43 @@
     }
   </style>
 </head>
-
 <body>
-  <div class="input-row">
-    <label for="nazioneInput">Nazione: </label>
-    <input type="text" id="nazioneInput" name="nazione">
-  </div>
-  <div class="input-row">
-    <label for="regioneInput">Regione: </label>
-    <input type="text" id="regioneInput" name="regione">
-  </div>
-  <div class="input-row">
-    <label for="cantinaInput">Cantina: </label>
-    <input type="text" id="cantinaInput" name="cantina">
-  </div>
-  <div class="input-row">
-    <label for="vinoInput">Vino: </label>
-    <input type="text" id="vinoInput" name="vino">
-  </div>
-  <div class="input-row">
-    <label for="tipologiaInput">Tipologia: </label>
-    <input type="text" id="tipologiaInput" name="tipologia">
-  </div>
-  <div class="input-row">
-    <label for="bollaInput">Bolla: </label>
-    <input type="text" id="bollaInput" name="bolla">
-  </div>
-  <div class="input-row">
-    <button onclick="cerca()">Cerca</button>
-  </div>
+  <form id="searchForm" onsubmit="return false;">
+    <div class="input-row">
+      <label for="nazioneInput">Nazione: </label>
+      <input type="text" id="nazioneInput" name="nazione">
+    </div>
+    <div class="input-row">
+      <label for="regioneInput">Regione: </label>
+      <input type="text" id="regioneInput" name="regione">
+    </div>
+    <div class="input-row">
+      <label for="cantinaInput">Cantina: </label>
+      <input type="text" id="cantinaInput" name="cantina">
+    </div>
+    <div class="input-row">
+      <label for="vinoInput">Vino: </label>
+      <input type="text" id="vinoInput" name="vino">
+    </div>
+    <div class="input-row">
+      <label for="tipologiaInput">Tipologia: </label>
+      <input type="text" id="tipologiaInput" name="tipologia">
+    </div>
+    <div class="input-row">
+      <label for="bollaInput">Bolla: </label>
+      <input type="text" id="bollaInput" name="bolla">
+    </div>
+    <div class="input-row">
+      <button type="submit">Cerca</button>
+    </div>
+  </form>
   <div id="risultato"></div>
   <script>
+    document.getElementById('searchForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      cerca();
+    });
+
     function cerca() {
       // Prendi i valori dei parametri
       var params = {
@@ -121,11 +127,8 @@
             "<th class='centered'>PRODUTTORE</th>" +
             "<th class='centered'>VINO</th>" +
             "<th class='centered'>ANNATA</th>" +
-            "<th class='centered'>DENOMINAZIONE</th>" +
-            "<th class='centered'>VITIGNI</th>" +
             "<th class='centered'>TIPOLOGIA</th>" +
             "<th class='centered'>BOLLA</th>" +
-            "<th class='centered'>ZUCCHERO</th>" +
             "<th class='centered'>FORMATO</th>" +
             "<th class='centered'>PREZZO SERVIZIO</th>" +
             "<th class='centered'>PREZZO ASPORTO</th>" +
