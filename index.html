@@ -138,23 +138,16 @@
             return;
           }
 
-          let html = "<table border='1'><tr>" +
-            "<th class='centered'>NAZIONE</th>" +
-            "<th class='centered'>REGIONE</th>" +
-            "<th class='centered'>PRODUTTORE</th>" +
-            "<th class='centered'>VINO</th>" +
-            "<th class='centered'>ANNATA</th>" +
-            "<th class='centered'>DENOMINAZIONE</th>" +
-            "<th class='centered'>VITIGNI</th>" +
-            "<th class='centered'>TIPOLOGIA</th>" +
-            "<th class='centered'>BOLLA</th>" +
-            "<th class='centered'>ZUCCHERO</th>" +
-            "<th class='centered'>FORMATO</th>" +
-            "<th class='centered'>QTA</th>" +
-            "<th class='centered'>FASCIA</th>" +
-            "<th class='centered'>PREZZO SERVIZIO</th>" +
-            "<th class='centered'>PREZZO ASPORTO</th>" +
-            "<th class='centered'>PREZZO CALICE</th></tr>";
+          let html = "<table border='1'><tr>";
+          const headers = [
+            "NAZIONE", "REGIONE", "PRODUTTORE", "VINO", "ANNATA", "DENOMINAZIONE", "VITIGNI",
+            "TIPOLOGIA", "BOLLA", "ZUCCHERO", "FORMATO", "QTA", "FASCIA",
+            "PREZZO SERVIZIO", "PREZZO ASPORTO", "PREZZO CALICE"
+          ];
+          headers.forEach((h, idx) => {
+            html += `<th class='centered' onclick="ordinaTabella(${idx})">${h}</th>`;
+          });
+          html += "</tr>";
 
           arr.forEach((row, rowIdx) => {
             html += `<tr onclick="selezionaRiga(this)">`;
@@ -180,6 +173,27 @@
       document.querySelectorAll("#risultato tr").forEach(r => r.classList.remove("selected-row"));
       tr.classList.add("selected-row");
     }
+
+    window.ordinaTabella = function(colIndex) {
+      const table = document.querySelector("#risultato table");
+      const rows = Array.from(table.rows).slice(1); // salta header
+      const asc = table.getAttribute("data-sort-col") != colIndex || table.getAttribute("data-sort-dir") !== "asc";
+      rows.sort((a, b) => {
+        let v1 = a.cells[colIndex].innerText;
+        let v2 = b.cells[colIndex].innerText;
+        // Prova a ordinare come numero se possibile
+        let n1 = parseFloat(v1.replace(",", "."));
+        let n2 = parseFloat(v2.replace(",", "."));
+        if (!isNaN(n1) && !isNaN(n2)) {
+          return asc ? n1 - n2 : n2 - n1;
+        }
+        return asc ? v1.localeCompare(v2) : v2.localeCompare(v1);
+      });
+      rows.forEach(r => table.tBodies[0].appendChild(r));
+      table.setAttribute("data-sort-col", colIndex);
+      table.setAttribute("data-sort-dir", asc ? "asc" : "desc");
+    };    
+    
   </script>
 </body>
 
