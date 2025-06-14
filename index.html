@@ -79,6 +79,10 @@
       <input type="text" id="bollaInput" name="bolla">
     </div>
     <div class="input-row">
+      <label for="soloPresenti">Vini in Cantina: </label>
+      <input type="checkbox" id="inCantina" name="inCantina">
+    </div>
+    <div class="input-row">
       <button type="submit">Cerca</button>
     </div>
   </form>
@@ -97,7 +101,8 @@
         cantina: document.getElementById('cantinaInput').value,
         vino: document.getElementById('vinoInput').value,
         tipologia: document.getElementById('tipologiaInput').value,
-        bolla: document.getElementById('bollaInput').value
+        bolla: document.getElementById('bollaInput').value,
+        inCantina: document.getElementById('inCantina').checked ? '1' : ''
       };
 
       // Costruisci la query string
