@@ -79,6 +79,17 @@
       <input type="text" id="bollaInput" name="bolla">
     </div>
     <div class="input-row">
+      <label for="fasciaInput">Fascia: </label>
+      <select id="fasciaInput" name="fascia">
+        <option value=""></option>
+        <option value="Fascia bassa">Fascia bassa</option>
+        <option value="Fascia media">Fascia media</option>
+        <option value="Fascia alta">Fascia alta</option>
+        <option value="Fascia altissima">Fascia altissima</option>
+        <option value="Vini di lusso">Vini di lusso</option>
+      </select>
+    </div>
+    <div class="input-row">
       <label for="soloPresenti">Vini in Cantina: </label>
       <input type="checkbox" id="inCantina" name="inCantina">
     </div>
@@ -102,6 +113,7 @@
         vino: document.getElementById('vinoInput').value,
         tipologia: document.getElementById('tipologiaInput').value,
         bolla: document.getElementById('bollaInput').value,
+        fascia: document.getElementById('fasciaInput').value,
         inCantina: document.getElementById('inCantina').checked ? '1' : ''
       };
 
@@ -138,6 +150,7 @@
             "<th class='centered'>BOLLA</th>" +
             "<th class='centered'>ZUCCHERO</th>" +
             "<th class='centered'>FORMATO</th>" +
+            "<th class='centered'>QTA</th>" +
             "<th class='centered'>PREZZO SERVIZIO</th>" +
             "<th class='centered'>PREZZO ASPORTO</th>" +
             "<th class='centered'>PREZZO CALICE</th></tr>";
